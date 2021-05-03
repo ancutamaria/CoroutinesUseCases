@@ -21,7 +21,7 @@ class Perform2SequentialNetworkRequestsViewModel(
                     mockApi.getAndroidVersionFeatures(mostRecentVersion.apiLevel)
                 uiState.value = UiState.Success(featuresOfMostRecentVersion)
             } catch (exception: Exception) {
-                uiState.value = UiState.Error("Smth went wrong")
+                uiState.value = UiState.Error("Network request failed")
             }
         }
     }

@@ -2,15 +2,14 @@ package com.am.coroutinesusecases.usecases.coroutines.usecase10
 
 import androidx.lifecycle.viewModelScope
 import com.am.coroutinesusecases.base.BaseViewModel
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.math.BigInteger
 import kotlin.system.measureTimeMillis
 
-class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
+class CalculationInBackgroundViewModel(
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+) : BaseViewModel<UiState>() {
 
     fun performCalculation(factorialOf: Int) {
         uiState.value = UiState.Loading
@@ -25,7 +24,7 @@ class CalculationInBackgroundViewModel : BaseViewModel<UiState>() {
             }
             var resultString: String
             val stringConversionDuration = measureTimeMillis {
-                resultString = withContext(Dispatchers.Default + CoroutineName("String conversion coroutine")) {
+                resultString = withContext(defaultDispatcher + CoroutineName("String conversion coroutine")) {
                     result.toString()
                 }
             }
